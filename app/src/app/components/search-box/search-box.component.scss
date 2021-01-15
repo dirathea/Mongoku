@@ -15,6 +15,11 @@
 		left: 70% !important;
 		right: 22px !important;
 		top: 40px !important;
+		background-color: var(--color-1);
+	}
+
+	.dropdown-item {
+		color: var(--text);
 	}
 
 	.params-group {

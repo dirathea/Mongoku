@@ -34,10 +34,10 @@
       <div class="close" (click)="toggle(false, 'project')">&times;</div>
     </div>
   </div>
-  <div class="add-param btn" (click)="$event.stopPropagation(); dropdwn.open();" [hidden]="!canAddParams()">
+  <div class="add-param btn btn-default" (click)="$event.stopPropagation(); dropdwn.open();" [hidden]="!canAddParams()">
     +
   </div>
-  <div class="confirm-search btn" (click)="go()">
+  <div class="confirm-search btn btn-default" (click)="go()">
     GO!
   </div>
 </div>
