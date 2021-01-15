@@ -2,6 +2,7 @@ import * as path from 'path';
 import * as fs from 'fs';
 
 import * as express from 'express';
+import * as basicAuth from 'express-basic-auth'
 const app = express()
 
 import factory from './lib/Factory';
@@ -17,6 +18,17 @@ const setupServer = () => {
       }
     });
   });
+
+  if (process.env.MONGOKU_BASIC_AUTH_USERNAME) {
+    const username = process.env.MONGOKU_BASIC_AUTH_USERNAME;
+    const pass = process.env.MONGOKU_BASIC_AUTH_PASSWORD;
+    app.use(basicAuth({
+      users: {
+        [username]: `${pass}`,
+      },
+      challenge: true,
+    }))
+  }
 
   app.use('/api', api);
 

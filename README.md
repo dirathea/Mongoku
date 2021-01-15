@@ -96,4 +96,8 @@ MONGOKU_COUNT_TIMEOUT=1000
 MONGOKU_CA_FILE=/etc/ssl/test/ca.pem
 MONGOKU_CERT_FILE=/etc/ssl/test/client.pem
 MONGOKU_KEY_FILE=/etc/ssl/test/client.pem
+
+# To protect your instance, we could add basic auth
+MONGOKU_BASIC_AUTH_USERNAME=admin
+MONGOKU_BASIC_AUTH_PASSWORD=password
 ```
