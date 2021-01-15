@@ -42,8 +42,8 @@ export class MongoManager {
       if (process.env.MONGOKU_CERT_FILE) {
         connectionOpts.sslCert = fs.readFileSync(process.env.MONGOKU_CERT_FILE);
       }
-      if (process.env.MONGOKU_CERT_FILE) {
-        connectionOpts.sslKey = fs.readFileSync(process.env.MONGOKU_CERT_FILE);
+      if (process.env.MONGOKU_KEY_FILE) {
+        connectionOpts.sslKey = fs.readFileSync(process.env.MONGOKU_KEY_FILE);
       }
       const client = await MongoDb.MongoClient.connect(urlStr, connectionOpts);
       const server = new Server(hostname, client);
