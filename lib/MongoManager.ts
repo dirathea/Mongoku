@@ -1,5 +1,6 @@
 import * as URL from 'url';
 import * as MongoDb from 'mongodb';
+import * as fs from 'fs';
 
 import factory from '../lib/Factory';
 
@@ -17,6 +18,7 @@ export class MongoManager {
   } = {};
 
   private async connect(host: Host) {
+    console.log(host.path);
     const urlStr = host.path.startsWith('mongodb')
       ? host.path
       : `mongodb://${host.path}`;
@@ -29,9 +31,21 @@ export class MongoManager {
     }
 
     try {
-      const client = await MongoDb.MongoClient.connect(urlStr, {
-        useNewUrlParser: true
-      });
+      const ca : Buffer[] = [];
+      if (process.env.MONGOKU_CA_FILE) {
+        ca.push(fs.readFileSync(process.env.MONGOKU_CA_FILE))
+      }
+      const connectionOpts : MongoDb.MongoClientOptions = {
+        useNewUrlParser: true,
+        sslCA: ca,
+      };
+      if (process.env.MONGOKU_CERT_FILE) {
+        connectionOpts.sslCert = fs.readFileSync(process.env.MONGOKU_CERT_FILE);
+      }
+      if (process.env.MONGOKU_CERT_FILE) {
+        connectionOpts.sslKey = fs.readFileSync(process.env.MONGOKU_CERT_FILE);
+      }
+      const client = await MongoDb.MongoClient.connect(urlStr, connectionOpts);
       const server = new Server(hostname, client);
       this._servers[hostname] = server;
       console.info(`[${hostname}] Connected to ${hostname}`);
